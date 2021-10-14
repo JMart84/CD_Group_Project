@@ -6,4 +6,4 @@ A web application for both professional and home-brewers to use for uploading an
 
 ***NEW FEATURES***
 
-We plan to add in comment sections, a “like” system, and the option to share a private recipe with someone else without making it publicly viewable. A profile picture feature will also be implemented.
+We plan to add in comment sections for each recipe, a way to edit account information, a profile picture file upload option, and a drastic overhaul in user interface.
