@@ -66,40 +66,6 @@ def session_user():
     my_recipes = Recipe.get_session_recipes(data)
     return render_template("account.html", user = user, user_id = user.id, my_recipes = my_recipes)
 
-# ---------------------------------
-# CURRENTLY WORKING ON USERS EDIT
-# ---------------------------------
-@app.route("/users/account/edit", methods=["GET", "POST"])
-def edit_user():
-    user_data = {
-        "id": session["user_id"]
-    }
-    user = User.get_user(user_data)
-    if session["user_id"] != user.id:
-        return redirect("/logout")
-    if request.method == "GET":
-        edit = True
-        data = {"id" : user.id}
-        user = User.get_user(data)
-        return render_template("edit_account.html", edit=edit, user=user, user_id = user.id)
-    elif request.method == "POST":
-        data = {}
-        for key in request.form:
-            data[key] = request.form[key]
-        data["id"] = user.id
-        if data["privacy"] == "True":
-            data["privacy"] = True
-        else:
-            data["privacy"] = False
-            if User.validate_registration(data):
-                User.update_user(data)
-                return redirect(f"/users/account")
-            else:
-                return redirect(f"/users/account/edit")
-    else:
-        return "I'm sorry, that request method isn't allowed"
-
-
 @app.route("/logout", methods=["POST"])
 def logout():
     session["user_id"] = None
