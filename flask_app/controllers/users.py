@@ -2,8 +2,15 @@ from flask import Flask, render_template, redirect, session, flash, request
 from flask_app import app
 from flask_app.models.user import User
 from flask_app.models.recipe import Recipe
+import os
+from werkzeug.utils import secure_filename
 from flask_bcrypt import Bcrypt
 bcrypt = Bcrypt(app)
+
+ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
+
+def allowed_file(filename):
+	return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 @app.route("/")
 def index():
@@ -67,7 +74,7 @@ def session_user():
     return render_template("account.html", user = user, user_id = user.id, my_recipes = my_recipes)
 
 # ---------------------------------
-# CURRENTLY WORKING ON USERS EDIT
+# CURRENTLY WORKING ON USERS EDIT  //image upload follow woofy pets.py lines 30-51
 # ---------------------------------
 @app.route("/users/account/edit", methods=["GET", "POST"])
 def edit_user():

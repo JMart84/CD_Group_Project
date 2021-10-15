@@ -22,7 +22,9 @@ class User:
 
     @classmethod
     def register_user(cls, data):
-        query = "INSERT INTO users (email, first_name, last_name, password, created_at, updated_at) VALUES (%(email)s, %(first_name)s, %(last_name)s, %(password)s, NOW(), NOW());"
+        if 'profile_pic' not in data:
+            data['profile_pic'] = None
+        query = "INSERT INTO users (email, first_name, last_name, password, created_at, updated_at, profile_pic) VALUES (%(email)s, %(first_name)s, %(last_name)s, %(password)s, %(profile_pic)s,NOW(), NOW());"
         return connectToMySQL("recipes").query_db(query, data)
 
     @classmethod
@@ -34,8 +36,8 @@ class User:
         return cls(results[0])
 
     @classmethod
-    def get_all(cls):
-        query = "SELECT * FROM users;"
+    def get_all(cls, data):
+        query = "SELECT * FROM users WHERE user_id = %(id)s;"
         results = connectToMySQL("recipes").query_db(query)
         users = []
         for user in results:

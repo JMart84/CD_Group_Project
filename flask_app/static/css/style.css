@@ -10,11 +10,33 @@
     height: 400px;
 }
 /* .container{
-    background-image: url("../images/beer.jpg");
+    background-image: url("../images/beer.png");
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
 } */
+
+body {
+    background-image: url("../images/beer_grain.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+h1 {
+    color: rgb(108,117,125);
+}
+
+h2 {
+    color: rgb(108,117,125);
+}
+
+th {
+    color: rgb(108,117,125);
+}
+
+td {
+    color: rgb(108,117,125);
+}
 
 table, th, td {
     border: 1px solid black;
