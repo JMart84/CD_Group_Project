@@ -5,6 +5,7 @@ from flask_app.models.recipe import Recipe
 import os
 from werkzeug.utils import secure_filename
 from flask_bcrypt import Bcrypt
+
 bcrypt = Bcrypt(app)
 
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
