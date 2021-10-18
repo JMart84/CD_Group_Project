@@ -9,13 +9,18 @@
     <body class="text-center">
         <div class="container">
             <div class="row">
-                <div class="col-9">
+                <div class="col-8">
                     <h1>Hello, {{session["user_name"]}}!</h1>
                     <!-- add for loop for user image / woofy/dashboard.html lines 37-41-->
                 </div>
                 <div class="col-1">
                     <a href="/recipes/new">
                         <button class="btn btn-secondary">Create Recipe</button>
+                    </a>
+                </div>
+                <div class="col-1">
+                    <a href="/dashboard">
+                        <button class="btn btn-secondary">Home</button>
                     </a>
                 </div>
                 <div class="col-1">

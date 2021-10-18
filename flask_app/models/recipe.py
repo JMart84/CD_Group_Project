@@ -21,6 +21,7 @@ class Recipe:
         self.updated_at = data["updated_at"]
         self.user_id = data["user_id"]
         self.creator = user.User.get_user({"id": data["user_id"]})
+        self.users_who_liked = []
 
     @classmethod
     def get_all(cls):
@@ -28,16 +29,6 @@ class Recipe:
         results = connectToMySQL("recipes").query_db(query)
         recipes = []
         for recipe in results:
-        #     creator_data = {
-        #         "id" = recipe["user_id"],
-        #         "email" = recipe["email"]
-        #         "first_name" = recipe["first_name"]
-        # self.last_name = recipe["last_name"]
-        # self.password = data["password"]
-        # self.created_at = data["created_at"]
-        # self.updated_at = data["updated_at"]
-        # self.profile_pic = data["profile_pic"]
-        #     }
             recipes.append(cls(recipe))
         return recipes
 
@@ -91,6 +82,25 @@ class Recipe:
     def delete_recipe(cls, data):
         query = "DELETE FROM recipes WHERE recipes.id = %(id)s"
         connectToMySQL("recipes").query_db(query, data)
+
+    @classmethod
+    def like_recipe(cls, data):
+        query = "INSERT INTO liked_recipes(recipe_id,user_id) VALUES(%(recipe_id)s,%(user_id)s)"
+        return connectToMySQL("recipes").query_db(query, data)
+
+    @classmethod
+    def dislike_recipe(cls, data):
+        query = "DELETE FROM liked_recipes WHERE recipe_id=%(recipe_id)s AND user_id=%(user_id)s"
+        return connectToMySQL("recipes").query_db(query, data)
+
+    @classmethod
+    def get_all_user_liked_recipes(cls, data):
+        recipes_liked = []
+        query = "SELECT recipe_id FROM liked_recipes JOIN users ON users.id=user_id WHERE user_id=%(id)s"
+        results = connectToMySQL("the_wall").query_db(query, data)
+        for result in results:
+            recipes_liked.append(result['recipe_id'])
+        return recipes_liked
 
     @staticmethod
     def validate_recipe(recipe_info):

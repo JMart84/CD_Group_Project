@@ -73,6 +73,26 @@ def edit_recipe(recipe_id):
     else:
         return "I'm sorry, that request method isn't allowed"
 
+@app.route('/recipes/<int:recipe_id>/like')
+def like(recipe_id):
+    data = {
+        "recipe_id": recipe_id,
+        "user_id": session['user_id']
+    }
+    Recipe.like_recipe(data)
+
+    return redirect("/recipes/<int:recipe_id>")
+
+@app.route('/recipes/<int:recipe_id>/dislike')
+def dislike(recipe_id):
+    data = {
+        "recipe_id": recipe_id,
+        "user_id": session['user_id']
+    }
+    Recipe.dislike_recipe(data)
+
+    return redirect("/recipes/<int:recipe_id>")
+
 @app.route("/recipes/delete/<int:recipe_id>")
 def delete_recipe(recipe_id):
     id_data = {"id": recipe_id}

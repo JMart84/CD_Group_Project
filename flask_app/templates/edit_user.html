@@ -7,15 +7,6 @@
     <title>Brewer's Database</title>
     </head>
     <body class="text-center">
-        <!-- <nav class="d-flex justify-content-between align-items-center col-12">
-            <h1 class="text-center">Hello, {{session["user_name"]}}!</h1>
-            <!-- add for loop for user image / woofy/dashboard.html lines 37-41-->
-            <!-- <div class="d-flex col-4 justify-content-around">
-                <a href="/dashboard" class="btn btn-secondary">Home</a>
-                <a href="/users/account" class="btn btn-secondary">Account</a>
-                <a href="/logout" method="post" class="btn btn-secondary">Logout</a>
-            </div>
-        </nav> --> -->
         <div class="container">
             <div class="row">
                 <div class="col-9">
@@ -46,7 +37,7 @@
                             <!-- create edit user route and method place in action line 47 -->
                             <form action="/users/account/edit" method="post" enctype="multipart/form-data">
                                 <div class="form-group">
-                                    <input name="first_name" class="form-control" placeholder="First Name">
+                                    <input name="first_name" class="form-control" placeholder="{{user.first_name}}">
                                     {% with messages = get_flashed_messages(category_filter=["first_name"]) %}
             
                                         {% if messages %}
@@ -59,7 +50,7 @@
                                     {% endwith %}
                                 </div>
                                 <div class="form-group">
-                                    <input name="last_name" class="form-control" placeholder="Last Name">
+                                    <input name="last_name" class="form-control" placeholder="{{user.last_name}}">
                                     {% with messages = get_flashed_messages(category_filter=["last_name"]) %}
             
                                         {% if messages %}
@@ -72,7 +63,7 @@
                                     {% endwith %}
                                 </div>
                                 <div class="form-group">
-                                    <input name="email" type="email" class="form-control" aria-describedby="emailHelp" placeholder="Enter email">
+                                    <input name="email" type="email" class="form-control" aria-describedby="emailHelp" placeholder="{{user.email}}">
                                     {% with messages = get_flashed_messages(category_filter=["email"]) %}
             
                                         {% if messages %}
@@ -104,7 +95,7 @@
                                     <label for='profile_pic'>User Image:</label>
                                     <input name='profile_pic' type="file" class="btn btn-secondary" />
                                 </div>
-                                <button type="submit" class="btn btn-secondary">Update User</button>
+                                <button type="submit" value="edit_user" class="btn btn-secondary">Update User</button>
                             </form>
                         </td>
                     </tr>

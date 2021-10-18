@@ -31,6 +31,11 @@
             <div class="row">
                 <div class="col-9">
                     <h2>{{recipe.name}}</h2>
+                    {% if recipe.id in recipes_user_liked %} 
+                        <a href="/recipes/{{recipe.id}}/dislike">Dislike!</a>
+                    {% else %} 
+                        <a href="/recipes/{{recipe.id}}/like">Like!</a>
+                    {% endif %}
                     <table class="table">
                         <tr>
                             <td>Description: </td><td>{{recipe.description}}</td>
