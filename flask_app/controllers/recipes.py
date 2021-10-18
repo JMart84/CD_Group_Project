@@ -7,6 +7,7 @@ from flask_app.models.user import User
 def dashboard():
     if session["logged_in"]:
         recipes = Recipe.get_all()
+        users = User.get_all()
         return render_template("dashboard.html", recipes = recipes)
     else:
         return redirect("/")

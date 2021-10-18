@@ -7,24 +7,24 @@
     <title>Brewer's Database</title>
     </head>
     <body class="text-center">
-        <nav class="d-flex justify-content-between align-items-center col-12">
+        <!-- <nav class="d-flex justify-content-between align-items-center col-12">
             <h1 class="text-center">Hello, {{session["user_name"]}}!</h1>
             <!-- add for loop for user image / woofy/dashboard.html lines 37-41-->
-            <div class="d-flex col-4 justify-content-around">
+            <!-- <div class="d-flex col-4 justify-content-around">
                 <a href="/dashboard" class="btn btn-secondary">Home</a>
                 <a href="/users/account" class="btn btn-secondary">Account</a>
-                <a href="/logout" class="btn btn-secondary">Logout</a>
+                <a href="/logout" method="post" class="btn btn-secondary">Logout</a>
             </div>
-        </nav>
+        </nav> --> -->
         <div class="container">
-            <!-- <div class="row">
+            <div class="row">
                 <div class="col-9">
-                    <h1>Hello, !</h1>-->
+                    <h1>Hello, {{session["user_name"]}}!</h1>
                     <!-- add for loop for user image / woofy/dashboard.html lines 37-41-->
-                <!-- </div>
+                </div>
                 <div class="col-1">
-                    <a href="/dashboard">
-                        <button class="btn btn-secondary">Home</button>
+                    <a href="/recipes/new">
+                        <button class="btn btn-secondary">Create Recipe</button>
                     </a>
                 </div>
                 <div class="col-1">
@@ -37,14 +37,14 @@
                         <button class="btn btn-secondary">Logout</button>
                     </form>
                 </div>
-            </div> -->
+            </div>
             <div class="container">
-                <table class="index-table">
+                <table class="index-table clr">
                     <tr>
                         <td class="form-entry">
-                            <h2>Edit User</h2>
+                            <h2>Edit User</h2> -->
                             <!-- create edit user route and method place in action line 47 -->
-                            <form action="/edit/user" method="post" enctype="multipart/form-data">
+                            <form action="/users/account/edit" method="post" enctype="multipart/form-data">
                                 <div class="form-group">
                                     <input name="first_name" class="form-control" placeholder="First Name">
                                     {% with messages = get_flashed_messages(category_filter=["first_name"]) %}

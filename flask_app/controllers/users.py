@@ -89,21 +89,16 @@ def edit_user():
         edit = True
         data = {"id" : user.id}
         user = User.get_user(data)
-        return render_template("edit_account.html", edit=edit, user=user, user_id = user.id)
+        return render_template("edit_user.html", edit=edit, user=user, user_id = user.id)
     elif request.method == "POST":
         data = {}
         for key in request.form:
             data[key] = request.form[key]
         data["id"] = user.id
-        if data["privacy"] == "True":
-            data["privacy"] = True
-        else:
-            data["privacy"] = False
-            if User.validate_registration(data):
-                User.update_user(data)
-                return redirect(f"/users/account")
-            else:
-                return redirect(f"/users/account/edit")
+        User.update_user(data)
+        return redirect(f"/users/account")
+        # else:
+        #     return redirect(f"/users/account/edit")
     else:
         return "I'm sorry, that request method isn't allowed"
 

@@ -36,8 +36,8 @@ class User:
         return cls(results[0])
 
     @classmethod
-    def get_all(cls, data):
-        query = "SELECT * FROM users WHERE user_id = %(id)s;"
+    def get_all(cls):
+        query = "SELECT * FROM users;"
         results = connectToMySQL("recipes").query_db(query)
         users = []
         for user in results:
@@ -64,7 +64,7 @@ class User:
 
     @classmethod
     def update_user(cls, data):
-        query = "UPDATE users SET first_name=%(first_name)s, last_name=%(last_name)s, email=%(email)s, updated_at=NOW(), profile_pic=%(profile_pic)s WHERE id = %(id)s;"
+        query = "UPDATE users SET first_name=%(first_name)s, last_name=%(last_name)s, email=%(email)s, password=%(password)s, updated_at=NOW(), profile_pic=%(profile_pic)s WHERE id = %(id)s;"
         return connectToMySQL("recipes").query_db(query,data)
 
     @staticmethod

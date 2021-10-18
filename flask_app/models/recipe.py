@@ -1,6 +1,7 @@
 from flask_app.config.mysqlconnection import connectToMySQL
 from flask import Flask, flash
 from flask_bcrypt import Bcrypt
+from flask_app.models import user
 from flask_app import app
 import re
 
@@ -19,13 +20,24 @@ class Recipe:
         self.created_at = data["created_at"]
         self.updated_at = data["updated_at"]
         self.user_id = data["user_id"]
+        self.creator = user.User.get_user({"id": data["user_id"]})
 
     @classmethod
     def get_all(cls):
-        query = "SELECT * FROM recipes WHERE privacy = 0;"
+        query = "SELECT * FROM recipes LEFT JOIN users ON users.id = recipes.user_id WHERE privacy=0;"
         results = connectToMySQL("recipes").query_db(query)
         recipes = []
         for recipe in results:
+        #     creator_data = {
+        #         "id" = recipe["user_id"],
+        #         "email" = recipe["email"]
+        #         "first_name" = recipe["first_name"]
+        # self.last_name = recipe["last_name"]
+        # self.password = data["password"]
+        # self.created_at = data["created_at"]
+        # self.updated_at = data["updated_at"]
+        # self.profile_pic = data["profile_pic"]
+        #     }
             recipes.append(cls(recipe))
         return recipes
 
@@ -34,8 +46,11 @@ class Recipe:
         query = "SELECT * FROM recipes WHERE user_id = %(user_id)s AND privacy = 0;"
         results = connectToMySQL("recipes").query_db(query, data)
         recipes = []
+        users = []
         for recipe in results:
             recipes.append(cls(recipe))
+        # for user in results:
+        #     users.append(cls(user))
         return recipes
 
 

@@ -9,13 +9,10 @@
     flex-direction: column;
     height: 400px;
 }
-/* .container{
-    background-image: url("../images/beer.png");
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-} */
 
+.clr{
+    background-color: rgba(255, 255, 255, .75);
+}
 body {
     background-image: url("../images/beer_grain.png");
     background-repeat: no-repeat;
