@@ -81,7 +81,7 @@ def like(recipe_id):
     }
     Recipe.like_recipe(data)
 
-    return redirect("/recipes/<int:recipe_id>")
+    return redirect(f"/recipes/{recipe_id}")
 
 @app.route('/recipes/<int:recipe_id>/dislike')
 def dislike(recipe_id):
@@ -91,7 +91,7 @@ def dislike(recipe_id):
     }
     Recipe.dislike_recipe(data)
 
-    return redirect("/recipes/<int:recipe_id>")
+    return redirect(f"/recipes/{recipe_id}")
 
 @app.route("/recipes/delete/<int:recipe_id>")
 def delete_recipe(recipe_id):

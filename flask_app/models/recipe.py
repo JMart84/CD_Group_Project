@@ -44,6 +44,52 @@ class Recipe:
         #     users.append(cls(user))
         return recipes
 
+# ****************************************
+# THIS IS THE ONE WE ARE MESSING WITH!!!
+# ****************************************
+
+    @classmethod
+    def get_all_recipes(cls):
+        query = "SELECT * FROM recipes "\
+                "LEFT JOIN users ON users.id = recipes.user_id "\
+                "LEFT JOIN liked_recipes ON recipes.id = liked_recipes.recipe_id "\
+                "LEFT JOIN users AS users2 ON users2.id = liked_recipes.user_id "\
+                "ORDER BY recipes.created_at DESC"
+
+        results = connectToMySQL("recipes").query_db(query)
+        all_recipes = []
+
+        for result in results:
+            new_recipe = True
+            like_user_data = {
+                "id" : result["users2.id"],
+                "first_name": result["users2.first_name"],
+                "last_name": result["users2.last_name"],
+                "email": result["users2.email"],
+                "password": result["users2.password"],
+                "created_at": result["users2.created_at"],
+                "updated_at": result["users2.updated_at"]
+            }
+            all_recipes[len(all_recipes)-1].users_who_liked.append(user(like_user_data))
+            new_recipe = False
+            if new_recipe:
+                recipe = cls(result)
+                creator_data = {
+                    "id" : result["users.id"],
+                    "first_name": result["first_name"],
+                    "last_name": result["last_name"],
+                    "email": result["email"],
+                    "password": result["password"],
+                    "created_at": result["users.created_at"],
+                    "updated_at": result["users.updated_at"]
+                }
+                recipe.creator = user(creator_data)
+                #There is a user who liked this recipe that needs to be processed
+                if result['users2.id'] is not None:
+                    recipe.users_who_liked.append(user(like_user_data))
+                all_recipes.append(recipe)
+            return all_recipes
+
 
     @classmethod
     def get_session_recipes(cls, data):
@@ -97,7 +143,7 @@ class Recipe:
     def get_all_user_liked_recipes(cls, data):
         recipes_liked = []
         query = "SELECT recipe_id FROM liked_recipes JOIN users ON users.id=user_id WHERE user_id=%(id)s"
-        results = connectToMySQL("the_wall").query_db(query, data)
+        results = connectToMySQL("recipes").query_db(query, data)
         for result in results:
             recipes_liked.append(result['recipe_id'])
         return recipes_liked
