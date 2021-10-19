@@ -10,14 +10,11 @@
         <div class="container">
             <div class="row">
                 <div class="col-8">
-                    <h1>Hello, {{session["user_name"]}}!</h1>
-                    <!-- add for loop for user image / woofy/dashboard.html lines 37-41-->
-                </div>
-                <div>
+                    <h1>My Brews!</h1>
                     {%- if not user.profile_pic -%}
-                        <img src="/static/images/useravatarimg.png" alt="shadow user" width="50" height="50">
+                        <img src="/static/images/useravatarimg.png" alt="shadow user" width="120" height="120">
                     {% else %}
-                        <img src="{{user.profile_pic}}" alt="user image" width="50" height="50">
+                        <img src="{{user.profile_pic}}" alt="user image" width="120" height="120">
                     {% endif %}
                 </div>
                 <div class="col-1">

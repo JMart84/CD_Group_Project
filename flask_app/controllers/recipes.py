@@ -43,7 +43,8 @@ def create_recipe():
 def show_recipe(recipe_id):
     data = {"id": recipe_id}
     recipe = Recipe.find_by_id(data)
-    return render_template("show_recipe.html", recipe=recipe)
+    recipes_user_liked = Recipe.get_all_user_liked_recipes(data)
+    return render_template("show_recipe.html", recipe=recipe, recipes_user_liked=recipes_user_liked)
 
 @app.route("/recipes/edit/<int:recipe_id>", methods=["GET", "POST"])
 def edit_recipe(recipe_id):
