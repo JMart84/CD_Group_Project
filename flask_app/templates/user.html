@@ -12,6 +12,13 @@
                 <div class="col-9">
                     <h1>Hello, {{session["user_name"]}}!</h1>
                 </div>
+                <div>
+                    {%- if not user.profile_pic -%}
+                        <img src="/static/images/useravatarimg.png" alt="shadow user" width="50" height="50">
+                    {% else %}
+                        <img src="{{user.profile_pic}}" alt="user image" width="50" height="50">
+                    {% endif %}
+                </div>
                 <div class="col-1">
                     <a href="/dashboard">
                         <button class="btn btn-secondary">Home</button>

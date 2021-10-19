@@ -95,6 +95,7 @@ def edit_user():
         for key in request.form:
             data[key] = request.form[key]
         data["id"] = user.id
+        data["profile_pic"] = request.files["profile_pic"]
         User.update_user(data)
         return redirect(f"/users/account")
         # else:

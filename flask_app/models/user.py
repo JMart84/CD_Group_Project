@@ -24,7 +24,7 @@ class User:
     def register_user(cls, data):
         if 'profile_pic' not in data:
             data['profile_pic'] = None
-        query = "INSERT INTO users (email, first_name, last_name, password, created_at, updated_at, profile_pic) VALUES (%(email)s, %(first_name)s, %(last_name)s, %(password)s, %(profile_pic)s,NOW(), NOW());"
+        query = "INSERT INTO users (email, first_name, last_name, password, created_at, updated_at, profile_pic) VALUES (%(email)s, %(first_name)s, %(last_name)s, %(password)s, NOW(), NOW(), %(profile_pic)s);"
         return connectToMySQL("recipes").query_db(query, data)
 
     @classmethod
@@ -66,7 +66,7 @@ class User:
     def update_user(cls, data):
         for key in data:
             print(key, ":", data[key])
-        query = "UPDATE recipes.users SET users.first_name=%(first_name)s, users.last_name=%(last_name)s, users.email=%(email)s, users.password=%(password)s, users.updated_at=NOW(), users.profile_pic=%(profile_pic)s WHERE users.id = %(id)s;"
+        query = "UPDATE recipes.users SET users.first_name=%(first_name)s, users.last_name=%(last_name)s, users.email=%(email)s, users.updated_at=NOW(), users.profile_pic=%(profile_pic)s WHERE users.id = %(id)s;"
         return connectToMySQL("recipes").query_db(query,data)
 
     @staticmethod
