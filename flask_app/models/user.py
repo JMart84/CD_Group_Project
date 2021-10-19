@@ -64,7 +64,9 @@ class User:
 
     @classmethod
     def update_user(cls, data):
-        query = "UPDATE users SET first_name=%(first_name)s, last_name=%(last_name)s, email=%(email)s, password=%(password)s, updated_at=NOW(), profile_pic=%(profile_pic)s WHERE id = %(id)s;"
+        for key in data:
+            print(key, ":", data[key])
+        query = "UPDATE recipes.users SET users.first_name=%(first_name)s, users.last_name=%(last_name)s, users.email=%(email)s, users.password=%(password)s, users.updated_at=NOW(), users.profile_pic=%(profile_pic)s WHERE users.id = %(id)s;"
         return connectToMySQL("recipes").query_db(query,data)
 
     @staticmethod
