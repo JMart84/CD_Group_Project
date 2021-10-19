@@ -68,6 +68,7 @@ def session_user():
         "id": session["user_id"]
     }
     user = User.get_user(user_data)
+    print(user.profile_pic)
     data = {
         "user_id": user.id
     }
@@ -91,17 +92,35 @@ def edit_user():
         user = User.get_user(data)
         return render_template("edit_user.html", edit=edit, user=user, user_id = user.id)
     elif request.method == "POST":
-        data = {}
-        for key in request.form:
-            data[key] = request.form[key]
-        data["id"] = user.id
-        data["profile_pic"] = request.files["profile_pic"]
-        User.update_user(data)
-        return redirect(f"/users/account")
+        profile_pic = None
+    # Chceck if image passed from html form
+    if "profile_pic" in request.files and request.files["profile_pic"]:
+        # Check file type
+        if not allowed_file(request.files['profile_pic']):
+            flash('Allowed image types are -> png, jpg, jpeg, gif')
+            redirect('/users/account')
+        # Get File called Image from HTML
+        f = request.files['profile_pic']
+        # Set Buffer to begining of Image
+        f.seek(0)
+        # Set Path to Save Image
+        # os path gets parent directory and adds path to join ... parent = '/' and joined = 'flask_app/static/images/ => returns parent+join => '/flask_app/static/images/'
+        f.save(os.path.join("flask_app/static/images/", secure_filename(f.filename)))
+        # Get Path of Image to save to DB
+        profile_pic = os.path.join("/static/images/", secure_filename(f.filename))
+    data = {
+        "first_name": request.form["first_name"],
+        "last_name": request.form["last_name"],
+        "email": request.form["email"],
+        "id": user.id,
+        "profile_pic": profile_pic
+    }
+    User.update_user(data)
+    return redirect(f"/users/account")
         # else:
         #     return redirect(f"/users/account/edit")
-    else:
-        return "I'm sorry, that request method isn't allowed"
+    # else:
+    #     return "I'm sorry, that request method isn't allowed"
 
 @app.route("/logout", methods=["POST"])
 def logout():

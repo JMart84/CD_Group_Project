@@ -70,8 +70,12 @@ class Recipe:
                 "created_at": result["users2.created_at"],
                 "updated_at": result["users2.updated_at"]
             }
-            all_recipes[len(all_recipes)-1].users_who_liked.append(user(like_user_data))
-            new_recipe = False
+            # all_recipes[len(all_recipes)-1].users_who_liked.append(user(like_user_data))
+            # new_recipe = False
+            if len(all_recipes) >0 and all_recipes[len(all_recipes) -1].id == result['id']:
+                all_recipes[len(all_recipes)-1].users_who_liked.append(user(like_user_data))
+                new_recipe = False
+
             if new_recipe:
                 recipe = cls(result)
                 creator_data = {
