@@ -150,6 +150,7 @@ class Recipe:
         results = connectToMySQL("recipes").query_db(query, data)
         for result in results:
             recipes_liked.append(result['recipe_id'])
+        print("recipes liked here", recipes_liked)
         return recipes_liked
 
     @staticmethod
