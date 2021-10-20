@@ -145,13 +145,13 @@ class Recipe:
 
     @classmethod
     def get_all_user_liked_recipes(cls, data):
-        recipes_liked = []
-        query = "SELECT recipe_id FROM liked_recipes JOIN users ON users.id=user_id WHERE user_id=%(id)s"
+        users_who_liked = []
+        query = "SELECT user_id FROM liked_recipes WHERE recipe_id=%(id)s;"
         results = connectToMySQL("recipes").query_db(query, data)
         for result in results:
-            recipes_liked.append(result['recipe_id'])
-        print("recipes liked here", recipes_liked)
-        return recipes_liked
+            users_who_liked.append(result['user_id'])
+        print("recipes liked here", users_who_liked)
+        return users_who_liked
 
     @staticmethod
     def validate_recipe(recipe_info):

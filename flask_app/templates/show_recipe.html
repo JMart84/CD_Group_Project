@@ -30,12 +30,16 @@
             <div class="row">
                 <div class="col-9">
                     <h2>{{recipe.name}}</h2>
-                    {% if recipe.id in recipes_user_liked %}
-                        <a href="/recipes/{{recipe.id}}/dislike">Unlike!</a>
+                    {% if session.user_id in recipes_user_liked %}
+                        <a href="/recipes/{{recipe.id}}/dislike">
+                            <button class="btn btn-secondary">Unlike Recipe</button>
+                        </a>
                     {% else %}
-                        <a href="/recipes/{{recipe.id}}/like">Like!</a>
+                        <a href="/recipes/{{recipe.id}}/like">
+                            <button class="btn btn-secondary">Like this recipe!</button>
+                        </a>
                     {% endif %}
-                    <p>Number of Likes: {{recipe.users_who_liked | length}}</p>
+                    <p>Number of Likes: {{recipes_user_liked |length}}</p>
                     <table class="table clr">
                         <tr>
                             <td>Description: </td><td>{{recipe.description}}</td>

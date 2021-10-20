@@ -43,16 +43,17 @@ def create_recipe():
 def show_recipe(recipe_id):
     data = {"id": recipe_id}
     recipe = Recipe.find_by_id(data)
-    recipes_user_liked = Recipe.get_all_user_liked_recipes(data)
-    print("this is the recipes_user_liked", recipes_user_liked)
-    return render_template("show_recipe.html", recipe=recipe, recipes_user_liked=recipes_user_liked)
+    if recipe.privacy==0 or (recipe.privacy==1 and recipe.user_id== session["user_id"]):
+        recipes_user_liked = Recipe.get_all_user_liked_recipes(data)
+        return render_template("show_recipe.html", recipe=recipe, recipes_user_liked=recipes_user_liked)
+    return redirect("/dashboard")
 
 @app.route("/recipes/edit/<int:recipe_id>", methods=["GET", "POST"])
 def edit_recipe(recipe_id):
     id_data = {"id": recipe_id}
     recipe = Recipe.find_by_id(id_data)
     if session["user_id"] != recipe.user_id:
-        return redirect("/logout")
+        return redirect("/dashboard")
     if request.method == "GET":
         edit = True
         data = {"id" : recipe_id}
